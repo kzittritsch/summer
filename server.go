@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/julienschmidt/httprouter"
-	"github.com/spf13/viper"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/julienschmidt/httprouter"
+	"github.com/spf13/viper"
 )
 
 func init() {
@@ -26,6 +27,9 @@ func main() {
 	router := httprouter.New()
 
 	router.GET("/*path", readHandler)
+
+	// File watcher
+	router.GET("/filewatch", fileWatchHandler)
 	router.PUT("/*path", writeHandler)
 	router.DELETE("/*path", deleteHandler)
 	router.POST("/*path", modifyHandler)
