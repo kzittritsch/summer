@@ -17,7 +17,8 @@ const (
 )
 
 func fileWatchHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	ws, err := upgrader.Upgrade(w, r, nil)
+	upgrader := websocket.Upgrader{}
+	_, err := upgrader.Upgrade(w, r, nil)
 
 	if err != nil {
 		if _, ok := err.(websocket.HandshakeError); !ok {
