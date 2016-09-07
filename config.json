@@ -1,5 +1,5 @@
 {
   "appPort": "9000",
   "logger": true,
-  "root": ""
+  "root": "",
 }

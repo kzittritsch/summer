@@ -26,15 +26,15 @@ type ResponseObj struct {
 func main() {
 	router := httprouter.New()
 
-	router.GET("/*path", readHandler)
+	router.GET("/*path", authMiddleware(readHandler))
 
 	// File watcher
-	router.GET("/filewatch", fileWatchHandler)
-	router.PUT("/*path", writeHandler)
-	router.DELETE("/*path", deleteHandler)
-	router.POST("/*path", modifyHandler)
+	//router.GET("/filewatch", authMiddleware(fileWatchHandler))
+	router.PUT("/*path", authMiddleware(writeHandler))
+	router.DELETE("/*path", authMiddleware(deleteHandler))
+	router.POST("/*path", authMiddleware(modifyHandler))
 
 	log.Println("Summer server listening at port" + ":" + viper.Get("appPort").(string))
 
-	log.Fatal(http.ListenAndServe(":"+viper.Get("appPort").(string), middleware(router)))
+	log.Fatal(http.ListenAndServe(":"+viper.Get("appPort").(string), router))
 }
